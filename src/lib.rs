@@ -1279,6 +1279,7 @@ fn make_colorspace<'a>(doc: &'a Document, name: &[u8], resources: &'a Dictionary
         b"DeviceCMYK" => ColorSpace::DeviceCMYK,
         b"Pattern" => ColorSpace::Pattern,
         _ => {
+            return ColorSpace::DeviceRGB;
             let colorspaces: &Dictionary = get(&doc, resources, b"ColorSpace");
             let cs = maybe_get_array(doc, colorspaces, &name[..]).unwrap_or_else(|| panic!("missing colorspace {:?}", &name[..]));
             let cs_name = pdf_to_utf8(cs[0].as_name().expect("first arg must be a name"));
